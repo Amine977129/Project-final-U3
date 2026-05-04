@@ -1,0 +1,9 @@
+CREATE DATABASE tic_tac_toe;
+
+USE tic_tac_toe;
+
+CREATE TABLE games (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  result VARCHAR(10),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
