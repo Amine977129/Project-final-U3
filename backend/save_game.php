@@ -1,18 +1,27 @@
 <?php
-$conn = new mysqli("localhost", "root", "", "project-final-U3");
 
-// Vérifier connexion
+$conn = new mysqli("localhost", "root", "", "tic_tac_toe");
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Lire les données JSON
 $data = json_decode(file_get_contents("php://input"), true);
+
+if (!$data || !isset($data["result"])) {
+    echo "No data received";
+    exit();
+}
 
 $result = $data["result"];
 
-// Insert dans la base
-$conn->query("INSERT INTO games (result) VALUES ('$result')");
+$sql = "INSERT INTO games (result) VALUES ('$result')";
 
-echo "OK";
+if ($conn->query($sql) === TRUE) {
+    echo "OK";
+} else {
+    echo "Error: " . $conn->error;
+}
+
+$conn->close();
 ?>
