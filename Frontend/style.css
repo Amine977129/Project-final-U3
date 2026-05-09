@@ -1,4 +1,4 @@
-/* --- Body et police --- */
+/* ===== BODY ===== */
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, #6a11cb, #2575fc);
@@ -12,12 +12,14 @@ body {
     color: white;
 }
 
+/* ===== TITLE ===== */
 h1 {
     font-size: 50px;
     margin-top: 20px;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
 }
 
+/* ===== BOARD ===== */
 #board {
     display: grid;
     grid-template-columns: repeat(5, 70px);
@@ -29,7 +31,7 @@ h1 {
     box-shadow: 0 8px 20px rgba(0,0,0,0.4);
 }
 
-
+/* ===== CELLS ===== */
 .cell {
     width: 70px;
     height: 70px;
@@ -51,7 +53,7 @@ h1 {
     transform: scale(1.1);
 }
 
-/* --- Animation pour X ou O --- */
+/* ===== ANIMATION X / O ===== */
 .cell.marked {
     animation: growText 0.5s ease;
 }
@@ -62,7 +64,7 @@ h1 {
     100% { transform: scale(1); color: #fff; }
 }
 
-/* --- Statu--- */
+/* ===== STATUS TEXT ===== */
 #statu {
     margin-top: 25px;
     font-size: 24px;
@@ -70,7 +72,7 @@ h1 {
     text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
 }
 
-/* --- Bouton --- */
+/* ===== BUTTON ===== */
 button {
     margin-top: 25px;
     padding: 14px 30px;

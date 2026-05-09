@@ -16,6 +16,18 @@ for (let i = 0; i < boardSize * boardSize; i++) {
 }
 
 board.style.gridTemplateColumns = `repeat(${boardSize}, 60px)`;
+fetch("backend/login.php", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        username: "test",
+        password: "1234"
+    })
+})
+.then(res => res.text())
+.then(data => console.log(data));
 
 function play(cell) {
     let i = cell.dataset.index;
@@ -67,7 +79,7 @@ function end(num1, num2, num3, num4, num5, winner) {
 
     sendResult(winner); // ✔ إرسال للـ PHP
 
-    setTimeout(() => location.reload(), 3000);
+    setTimeout(() => location.reload(), 3000000000000);
 }
 
 
@@ -142,3 +154,4 @@ function checkWinner() {
 
     return false;
 }
+
