@@ -14,7 +14,7 @@ for (let i = 0; i < boardSize * boardSize; i++) {
     cell.addEventListener("click", () => play(cell));
     board.appendChild(cell);
 }
-
+alert("JS IS WORKING");
 board.style.gridTemplateColumns = `repeat(${boardSize}, 60px)`;
 fetch("backend/login.php", {
     method: "POST",
@@ -29,6 +29,44 @@ fetch("backend/login.php", {
 .then(res => res.text())
 .then(data => console.log(data));
 
+
+function login() {
+    fetch("../backend/login.php", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            username: username.value,
+            password: password.value
+        })
+    })
+    .then(res => res.text())
+    .then(data => {
+        alert(data);
+
+        if (data === "LOGIN OK") {
+            window.location.href = "index.html";
+        }
+    });
+}
+function register() {
+    alert("STEP 1 OK");
+
+    fetch("../backend/register.php", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            username: "test",
+            password: "123"
+        })
+    })
+    .then(res => res.text())
+    .then(data => {
+        alert("SERVER: " + data);
+    })
+    .catch(err => {
+        alert("ERROR: " + err);
+    });
+}
 function play(cell) {
     let i = cell.dataset.index;
 
