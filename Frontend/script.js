@@ -247,14 +247,17 @@ function login() {
 const boardSize = 5;
 let turn = "X";
 let squares = Array(boardSize * boardSize).fill("");
+
 let board = document.getElementById("board");
 let statu = document.getElementById("statu");
 let selectedCell = null;
 
-/* create board safely */
 if (board) {
+
     for (let i = 0; i < boardSize * boardSize; i++) {
+
         let cell = document.createElement("div");
+
         cell.classList.add("cell");
         cell.dataset.index = i;
         cell.id = "item" + i;
@@ -264,7 +267,8 @@ if (board) {
         board.appendChild(cell);
     }
 
-    board.style.gridTemplateColumns = `repeat(${boardSize}, 60px)`;
+    board.style.gridTemplateColumns =
+        `repeat(${boardSize}, 60px)`;
 }
 
 /* play */
