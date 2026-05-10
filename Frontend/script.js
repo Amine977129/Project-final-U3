@@ -23,7 +23,7 @@ if (document.getElementById("board")) {
 
         cell.addEventListener("click", () => play(cell));
 
-        // board.appendChild(cell);
+        
     }
 }
 /* ================= PLAY ================= */
