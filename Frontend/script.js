@@ -1,53 +1,5 @@
 
 
-
-
-function register() {
-    let username = document.getElementById("username").value;
-    let password = document.getElementById("password").value;
-
-    fetch("../backend/register.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            username: username,
-            password: password
-        })
-    })
-    .then(res => res.text())
-    .then(data => {
-        alert(data);
-
-        if (data === "REGISTER OK") {
-            window.location.href = "login.html";
-        }
-    })
-    .catch(err => console.log("Register error:", err));
-}
-
-function login() {
-    let username = document.getElementById("username").value;
-    let password = document.getElementById("password").value;
-
-    fetch("../backend/login.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            username: username,
-            password: password
-        })
-    })
-    .then(res => res.text())
-    .then(data => {
-        alert(data);
-
-        if (data === "LOGIN OK") {
-            window.location.href = "index.html";
-        }
-    })
-    .catch(err => console.log("Login error:", err));
-}
-
 /* ================= GAME ================= */
 
 const boardSize = 5;
@@ -58,9 +10,8 @@ let board = document.getElementById("board");
 let statu = document.getElementById("statu");
 let selectedCell = null;
 
-if (!board) {
-    console.log("No board in this page");
-} else {
+/* 🔥 IMPORTANT FIX */
+if (board && statu) {
 
     for (let i = 0; i < boardSize * boardSize; i++) {
 
@@ -68,6 +19,7 @@ if (!board) {
 
         cell.classList.add("cell");
         cell.dataset.index = i;
+        cell.id = "item" + i;
 
         cell.addEventListener("click", () => play(cell));
 
@@ -78,8 +30,8 @@ if (!board) {
         `repeat(${boardSize}, 60px)`;
 }
 
+/* ================= PLAY ================= */
 
-/* play */
 function play(cell) {
     let i = cell.dataset.index;
 
@@ -98,7 +50,8 @@ function play(cell) {
     }
 }
 
-/* O key */
+/* ================= O KEY ================= */
+
 document.addEventListener("keydown", function (e) {
     if (turn === "O" && e.key.toLowerCase() === "o" && selectedCell) {
 
@@ -117,7 +70,8 @@ document.addEventListener("keydown", function (e) {
     }
 });
 
-/* end game */
+/* ================= END ================= */
+
 function end(a, b, c, d, e, winner) {
 
     if (statu) statu.textContent = "Winner: " + winner;
@@ -133,7 +87,8 @@ function end(a, b, c, d, e, winner) {
     setTimeout(() => location.reload(), 3000);
 }
 
-/* save result */
+/* ================= SAVE ================= */
+
 function sendResult(winner) {
     fetch("../backend/save_game.php", {
         method: "POST",
@@ -142,7 +97,8 @@ function sendResult(winner) {
     });
 }
 
-/* win check */
+/* ================= WIN CHECK ================= */
+
 function checkWinner() {
 
     for (let r = 0; r < boardSize; r++) {
