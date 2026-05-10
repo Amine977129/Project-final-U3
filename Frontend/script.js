@@ -58,7 +58,9 @@ let board = document.getElementById("board");
 let statu = document.getElementById("statu");
 let selectedCell = null;
 
-if (board && statu) {
+if (!board) {
+    console.log("No board in this page");
+} else {
 
     for (let i = 0; i < boardSize * boardSize; i++) {
 
@@ -66,7 +68,6 @@ if (board && statu) {
 
         cell.classList.add("cell");
         cell.dataset.index = i;
-        cell.id = "item" + i;
 
         cell.addEventListener("click", () => play(cell));
 
@@ -76,6 +77,7 @@ if (board && statu) {
     board.style.gridTemplateColumns =
         `repeat(${boardSize}, 60px)`;
 }
+
 
 /* play */
 function play(cell) {
