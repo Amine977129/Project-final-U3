@@ -1,7 +1,7 @@
 
 
 /* ================= GAME ================= */
-
+console.log("NEW SCRIPT LOADED ✔");
 const boardSize = 5;
 let turn = "X";
 let squares = Array(boardSize * boardSize).fill("");
