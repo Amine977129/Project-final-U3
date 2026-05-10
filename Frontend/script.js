@@ -58,7 +58,7 @@ let board = document.getElementById("board");
 let statu = document.getElementById("statu");
 let selectedCell = null;
 
-if (board) {
+if (board && statu) {
 
     for (let i = 0; i < boardSize * boardSize; i++) {
 
