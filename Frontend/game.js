@@ -1,3 +1,4 @@
+
 /* ================= GAME ================= */
 
 console.log("NEW SCRIPT LOADED ✔");
@@ -7,14 +8,13 @@ let turn = "X";
 
 let squares = Array(boardSize * boardSize).fill("");
 
+let board = document.getElementById("board");
 let statu = document.getElementById("statu");
 let selectedCell = null;
 
 /* ================= CREATE BOARD ================= */
 
-if (document.getElementById("board")) {
-
-    let board = document.getElementById("board");
+if (board) {
 
     for (let i = 0; i < boardSize * boardSize; i++) {
 
@@ -26,7 +26,7 @@ if (document.getElementById("board")) {
 
         cell.addEventListener("click", () => play(cell));
 
-        board.appendChild(cell);
+        board.appendChild(cell); // ✅ FIX IMPORTANT
     }
 
     board.style.gridTemplateColumns =
@@ -50,9 +50,7 @@ function play(cell) {
 
         turn = "O";
 
-        if (statu) {
-            statu.textContent = "Turn O";
-        }
+        if (statu) statu.textContent = "Turn O (press O key)";
 
     } else {
 
@@ -79,16 +77,14 @@ document.addEventListener("keydown", function (e) {
 
             turn = "X";
 
-            if (statu) {
-                statu.textContent = "Turn X";
-            }
+            if (statu) statu.textContent = "Turn X";
 
             selectedCell = null;
         }
     }
 });
 
-/* ================= END ================= */
+/* ================= END GAME ================= */
 
 function end(a, b, c, d, e, winner) {
 
@@ -96,35 +92,13 @@ function end(a, b, c, d, e, winner) {
         statu.textContent = "Winner: " + winner;
     }
 
-    document.getElementById("item" + a).style.background = "green";
-    document.getElementById("item" + b).style.background = "green";
-    document.getElementById("item" + c).style.background = "green";
-    document.getElementById("item" + d).style.background = "green";
-    document.getElementById("item" + e).style.background = "green";
-
-    sendResult(winner);
+    [a, b, c, d, e].forEach(i => {
+        document.getElementById("item" + i).style.background = "green";
+    });
 
     setTimeout(() => {
         location.reload();
     }, 3000);
-}
-
-/* ================= SAVE ================= */
-
-function sendResult(winner) {
-
-    fetch("../backend/save_game.php", {
-
-        method: "POST",
-
-        headers: {
-            "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-            result: winner
-        })
-    });
 }
 
 /* ================= CHECK WINNER ================= */
@@ -132,45 +106,38 @@ function sendResult(winner) {
 function checkWinner() {
 
     /* ROWS */
-
     for (let r = 0; r < boardSize; r++) {
 
         let s = r * boardSize;
 
         if (
             squares[s] &&
-            squares[s] === squares[s + 1] &&
-            squares[s] === squares[s + 2] &&
-            squares[s] === squares[s + 3] &&
-            squares[s] === squares[s + 4]
+            squares[s] === squares[s+1] &&
+            squares[s] === squares[s+2] &&
+            squares[s] === squares[s+3] &&
+            squares[s] === squares[s+4]
         ) {
-
-            end(s, s+1, s+2, s+3, s+4, squares[s]);
-
+            end(s,s+1,s+2,s+3,s+4,squares[s]);
             return true;
         }
     }
 
     /* COLUMNS */
-
     for (let c = 0; c < boardSize; c++) {
 
         if (
             squares[c] &&
-            squares[c] === squares[c + 5] &&
-            squares[c] === squares[c + 10] &&
-            squares[c] === squares[c + 15] &&
-            squares[c] === squares[c + 20]
+            squares[c] === squares[c+5] &&
+            squares[c] === squares[c+10] &&
+            squares[c] === squares[c+15] &&
+            squares[c] === squares[c+20]
         ) {
-
-            end(c, c+5, c+10, c+15, c+20, squares[c]);
-
+            end(c,c+5,c+10,c+15,c+20,squares[c]);
             return true;
         }
     }
 
     /* DIAGONAL 1 */
-
     if (
         squares[0] &&
         squares[0] === squares[6] &&
@@ -178,14 +145,11 @@ function checkWinner() {
         squares[0] === squares[18] &&
         squares[0] === squares[24]
     ) {
-
-        end(0, 6, 12, 18, 24, squares[0]);
-
+        end(0,6,12,18,24,squares[0]);
         return true;
     }
 
     /* DIAGONAL 2 */
-
     if (
         squares[4] &&
         squares[4] === squares[8] &&
@@ -193,9 +157,7 @@ function checkWinner() {
         squares[4] === squares[16] &&
         squares[4] === squares[20]
     ) {
-
-        end(4, 8, 12, 16, 20, squares[4]);
-
+        end(4,8,12,16,20,squares[4]);
         return true;
     }
 
